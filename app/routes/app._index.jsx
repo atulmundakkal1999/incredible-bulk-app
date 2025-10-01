@@ -101,7 +101,7 @@ export default function Index() {
         </button>
       </ui-title-bar>
 
-      <s-section heading="Congrats on creating a new Shopify app 🎉">
+      <s-section heading="Congrats on creating Ai Incredible Bulk app 🎉">
         <s-paragraph>
           This embedded app template uses{" "}
           <s-link
