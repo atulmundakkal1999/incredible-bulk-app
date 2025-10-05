@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  engineType = "binary"
 }
 
 // Note that some adapters may set a maximum length for the String type by default, please ensure your strings are long
@@ -29,4 +30,32 @@ model Session {
   locale        String?
   collaborator  Boolean?  @default(false)
   emailVerified Boolean?  @default(false)
+}
+
+model UserConfiguration {
+  id                String   @id @default(cuid())
+  shop              String
+  googleTokens      String?  // JSON string of Google OAuth tokens
+  microsoftTokens   String?  // JSON string of Microsoft OAuth tokens
+  preferences       String?  // JSON string of user preferences
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  @@unique([shop])
+}
+
+model SpreadsheetOperation {
+  id                String   @id @default(cuid())
+  shop              String
+  sessionId         String
+  operationType     String
+  parameters        String   // JSON string of operation parameters
+  code              String?  // Generated code for the operation
+  status            String   @default("pending") // pending, executing, completed, failed
+  result            String?  // JSON string of operation result
+  error             String?  // Error message if failed
+  createdAt         DateTime @default(now())
+  completedAt       DateTime?
+  
+  @@index([shop, sessionId])
 }
